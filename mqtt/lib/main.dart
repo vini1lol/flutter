@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mqtt/route.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:sensors/sensors.dart';
 
@@ -18,20 +19,21 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Homepage(),
+      initialRoute: '/',
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }
 
 class Homepage extends StatefulWidget {
+  final String data;
   var ps = [];
   var x = 0, y = 0, z = 0;
-  Homepage() {
-    ps = [];
-    x = 0;
-    y = 0;
-    z = 0;
-  }
+
+  Homepage({
+    Key key,
+    @required this.data,
+  }) : super(key: key);
   @override
   _HomepageState createState() => _HomepageState();
 }
@@ -211,7 +213,9 @@ class _HomepageState extends State<Homepage> {
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.play_arrow),
-              onPressed: processo,
+              onPressed: () {
+                Navigator.of(context).pushNamed('/second', arguments: "hi");
+              },
             )
           ],
         ),
