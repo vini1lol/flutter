@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mqtt/route.dart';
@@ -41,6 +40,10 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   Future processo() async {
     var p = widget.ps;
+    widget.x = 2;
+    widget.y = 3;
+    widget.z = 5;
+
     client.logging(on: false);
     client.keepAlivePeriod = 20;
     client.onDisconnected = onDisconnected;
@@ -80,7 +83,6 @@ class _HomepageState extends State<Homepage> {
             'ERROR Mosquitto client connection failed - disconnecting, status is ${client.connectionStatus}');
       });
       client.disconnect();
-      exit(-1);
     }
 
     /// Ok, lets try a subscription
@@ -176,7 +178,6 @@ class _HomepageState extends State<Homepage> {
         widget.ps.add('OnDisconnected callback is solicited, this is correct');
       });
     }
-    exit(-1);
   }
 
   /// The successful connect callback
